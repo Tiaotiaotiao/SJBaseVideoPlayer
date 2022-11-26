@@ -257,6 +257,9 @@ typedef struct _SJPlayerControlInfo {
     
     for ( UIGestureRecognizer *gesture in playerView.superview.gestureRecognizers ) {
         if ( [gesture isKindOfClass:UITapGestureRecognizer.class] && gesture.isEnabled ) {
+            if (!view && self.tapSuperViewBlock) {
+                self.tapSuperViewBlock(playerView.superview);
+            }
             gesture.enabled = NO;
             dispatch_async(dispatch_get_main_queue(), ^{
                 gesture.enabled = YES;
@@ -1110,11 +1113,17 @@ typedef struct _SJPlayerControlInfo {
 }
 
 - (void)refresh {
-    if ( !self.URLAsset ) return;
-    [self _postNotification:SJVideoPlayerPlaybackWillRefreshNotification];
-    [_playbackController refresh];
-    [self play];
-    [self _postNotification:SJVideoPlayerPlaybackDidRefreshNotification];
+//    if ( !self.URLAsset ) return;
+ //    [self _postNotification:SJVideoPlayerPlaybackWillRefreshNotification];
+ //    [_playbackController refresh];
+ //    [self play];
+ //    [self _postNotification:SJVideoPlayerPlaybackDidRefreshNotification];
+    if (!self.URLAsset) return;
+    
+    if (self.playbackController.timeControlStatus == SJPlaybackTimeControlStatusPaused) {
+        SJMediaPlaybackController *playbackController = (SJMediaPlaybackController *)self.playbackController;
+        playbackController.isPlaybackFinished ? [playbackController replay] : [playbackController play];
+    }
 }
 
 - (void)setPlayerVolume:(float)playerVolume {
