@@ -56,7 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) __kindof UIView *view;
 @property (nonatomic, weak, nullable) id <SJVideoPlayerControlLayerDataSource> controlLayerDataSource;
 @property (nonatomic, weak, nullable) id <SJVideoPlayerControlLayerDelegate> controlLayerDelegate;
+
 @property (nonatomic, nullable, copy) void(^tapSuperViewBlock)(UIView *view);
+@property (nonatomic, getter=isHokPlay, assign) BOOL hokPlay;
+
 @end
 
 

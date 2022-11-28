@@ -828,6 +828,16 @@ typedef struct _SJPlayerControlInfo {
 - (BOOL)touchedOnTheScrollView {
     return _playModelObserver.isTouched;
 }
+
+#pragma mark - Hok custom
+
+- (void)setHokPlay:(BOOL)hokPlay {
+    _hokPlay = hokPlay;
+    
+    SJAVMediaPlaybackController *pb = (SJAVMediaPlaybackController *)self.playbackController;
+    pb.hokPlay = hokPlay;
+}
+
 @end
 
 @implementation SJBaseVideoPlayer (AudioSession)

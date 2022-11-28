@@ -241,6 +241,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)play {
     if (@available(iOS 14.0, *)) {
+        if (self.isHokPlay) {
+            [super play];
+            return;
+        }
+        
         self.needsToRefresh_fix339 ? [self refresh] : [super play];
     }
     else {

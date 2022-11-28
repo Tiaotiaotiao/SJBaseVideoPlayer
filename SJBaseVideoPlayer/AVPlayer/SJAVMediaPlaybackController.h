@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly, nullable) SJAVMediaPlayerLayerView *currentPlayerView;
 @property (nonatomic) BOOL accurateSeeking;
 
+@property (nonatomic, getter=isHokPlay, assign) BOOL hokPlay;
+
 @end
 
 @interface SJAVMediaPlaybackController (SJAVMediaPlaybackAdd)<SJMediaPlaybackExportController, SJMediaPlaybackScreenshotController>
