@@ -101,7 +101,7 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
 }
 
 - (void)_setupView {
-    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
+    self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     self.layer.cornerRadius = 5;
     
     _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -113,17 +113,17 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
     [self addSubview:_progressView];
     
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.bottom.offset(0);
-        make.width.equalTo(self.imageView.mas_height);
-        make.height.offset(38);
+        make.left.mas_equalTo(10);
+        make.centerY.mas_equalTo(0);
+        make.width.height.mas_equalTo(20);
     }];
     
     [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.imageView.mas_right).offset(5);
-        make.centerY.offset(0);
-        make.right.offset(-12);
-        make.height.offset(2);
-        make.width.offset(100);
+        make.left.mas_equalTo(self.imageView.mas_right).offset(8);
+        make.centerY.mas_equalTo(0);
+        make.right.mas_equalTo(-10);
+        make.height.mas_equalTo(2);
+        //make.width.offset(100);
     }];
     
     [_imageView setContentHuggingPriority:251 forAxis:UILayoutConstraintAxisHorizontal];
@@ -140,11 +140,11 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
 @end
 @implementation SJDeviceVolumeAndBrightnessPopupItem
 - (UIColor *)traceColor {
-    return _traceColor?:UIColor.whiteColor;
+    return _traceColor ? : [UIColor colorWithRed:0/255.0 green:145/255.0 blue:255/255.0 alpha:0.7000];
 }
 
 - (UIColor *)trackColor {
-    return _trackColor?:[UIColor colorWithWhite:0.6 alpha:0.5];
+    return _trackColor ? : [UIColor colorWithRed:239/255.0 green:239/255.0 blue:238/255.0 alpha:1.0];
 }
 @end
 
@@ -223,6 +223,7 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
             });
         });
         _volumeView.dataSource = model;
+        _volumeView.layer.cornerRadius = 16;
     }
     return _volumeView;
 }
@@ -233,8 +234,11 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
     UIView *volumeView = self.volumeView;
     if ( targetView.window != nil && volumeView.superview != targetView ) {
         [targetView addSubview:volumeView];
-        [volumeView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.offset(0);
+         [volumeView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo([self top]);
+            make.centerX.mas_equalTo(0);
+            make.width.mas_equalTo(185);
+            make.height.offset(32);
         }];
     }
     
@@ -287,6 +291,7 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
             });
         });
         _brightnessView.dataSource = model;
+        _brightnessView.layer.cornerRadius = 16;
     }
     return _brightnessView;
 }
@@ -305,7 +310,10 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
     if ( targetView != nil && brightnessView.superview != targetView ) {
         [targetView addSubview:brightnessView];
         [brightnessView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.offset(0);
+            make.top.mas_equalTo([self top]);
+            make.centerX.mas_equalTo(0);
+            make.width.mas_equalTo(185);
+            make.height.offset(32);
         }];
     }
     
@@ -320,6 +328,13 @@ static NSNotificationName const SJDeviceBrightnessDidChangeNotification = @"SJDe
     UIView *brightnessView = self.brightnessView;
     [brightnessView removeFromSuperview];
 }
+
+- (CGFloat)top {
+    BOOL isHS = [UIScreen mainScreen].bounds.size.height < [UIScreen mainScreen].bounds.size.width;
+    CGFloat top  = [UIScreen mainScreen].bounds.size.height * (isHS ? 0.16 : 0.05);
+    return top;
+}
+
 @end
 
 
