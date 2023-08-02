@@ -1220,7 +1220,7 @@ typedef struct _SJPlayerControlInfo {
     }
 
     [_playbackController play];
-
+    
     [self.controlLayerAppearManager resume];
 }
 

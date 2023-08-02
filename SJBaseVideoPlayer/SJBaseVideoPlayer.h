@@ -60,6 +60,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) void(^tapSuperViewBlock)(UIView *view);
 @property (nonatomic, getter=isHokPlay, assign) BOOL hokPlay;
 
+
+/// 是否限制网络改变时 自动恢复播放 有时候不需要 比如用户已经手动暂停了 默认 NO（tiaotiao）
+@property (nonatomic, getter=isLimitNetworkChangeAutoPlay, assign) BOOL limitNetworkChangeAutoPlay;
+
 @end
 
 
